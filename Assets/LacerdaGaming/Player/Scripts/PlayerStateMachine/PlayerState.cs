@@ -6,6 +6,7 @@ public abstract class PlayerState : BaseState<PlayerStateMachine.EPlayerState>
     protected PlayerStateMachine _playerStateMachine;
     protected PlayerState _currentSuperState;
     protected PlayerState _currentSubState;
+    protected RaycastHit _climbHit;
 
     public PlayerState(PlayerContext context, PlayerStateMachine.EPlayerState stateKey, PlayerStateMachine playerStateMachine) : base(stateKey)
     {
@@ -28,11 +29,11 @@ public abstract class PlayerState : BaseState<PlayerStateMachine.EPlayerState>
 
         if (_currentSubState._currentSuperState != this)
         {
-            _currentSubState.SetSuperState(this);
+            _currentSubState._currentSuperState = this;
         }
     }
 
-    public virtual void HandleMovement()
+    protected virtual void HandleMovement()
     {
         Vector3 cameraForwardXZ = new Vector3(_context.PlayerCamera.transform.forward.x, 0f, _context.PlayerCamera.transform.forward.z).normalized;
         Vector3 cameraRightXZ = new Vector3(_context.PlayerCamera.transform.right.x, 0f, _context.PlayerCamera.transform.right.z).normalized;
@@ -54,5 +55,17 @@ public abstract class PlayerState : BaseState<PlayerStateMachine.EPlayerState>
         Vector3 finalVelocity = new(newHorizontalVelocity.x, _context.VerticalVelocity, newHorizontalVelocity.z);
 
         _context.CharacterController.Move(finalVelocity * Time.deltaTime);
+    }
+
+    protected void HandlePlayerRotation()
+    {
+        bool isMoving = _context.PlayerLocomotionInput.MovementInput != Vector2.zero;
+
+        // Se está se movendo, rotaciona o player para a direção do movimento
+        if (isMoving && _context.MovementDirection.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(_context.MovementDirection);
+            _context.PlayerTransform.rotation = Quaternion.Lerp(_context.PlayerTransform.rotation, targetRotation, _context.MovementConfig.rotationSpeed * Time.deltaTime);
+        }
     }
 }

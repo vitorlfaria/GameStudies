@@ -23,6 +23,11 @@ public class FallingState : PlayerState
         GetNextState();
     }
 
+    public override void LateUpdateState()
+    {
+        HandlePlayerRotation();
+    }
+
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
         if (_context.CharacterController.isGrounded)

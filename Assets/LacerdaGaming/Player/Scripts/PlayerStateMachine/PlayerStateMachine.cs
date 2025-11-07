@@ -82,7 +82,7 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.EPlayerState>
 
     private void LateUpdate()
     {
-        UpdatePlayerRotation();
+        CurrentState.LateUpdateState();
         UpdateCameraRotation();
     }
 
@@ -103,18 +103,6 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.EPlayerState>
         if (Mathf.Abs(_context.VerticalVelocity) > Mathf.Abs(_movementConfig.terminalVelocity))
         {
             _context.VerticalVelocity = -1f * Mathf.Abs(_movementConfig.terminalVelocity);
-        }
-    }
-
-    private void UpdatePlayerRotation()
-    {
-        bool isMoving = _context.PlayerLocomotionInput.MovementInput != Vector2.zero;
-
-        // Se está se movendo, rotaciona o player para a direção do movimento
-        if (isMoving && _context.MovementDirection.magnitude > 0.1f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(_context.MovementDirection);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _movementConfig.rotationSpeed * Time.deltaTime);
         }
     }
 

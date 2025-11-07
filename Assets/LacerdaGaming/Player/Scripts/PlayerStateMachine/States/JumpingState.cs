@@ -28,6 +28,11 @@ public class JumpingState : PlayerState
         GetNextState();
     }
 
+    public override void LateUpdateState()
+    {
+        HandlePlayerRotation();
+    }
+
     public override PlayerStateMachine.EPlayerState GetNextState()
     {
         if (_context.VerticalVelocity < 0f)

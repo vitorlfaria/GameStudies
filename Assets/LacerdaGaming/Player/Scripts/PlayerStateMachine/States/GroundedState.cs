@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundedState : PlayerState
@@ -24,6 +25,11 @@ public class GroundedState : PlayerState
         _currentSubState?.UpdateState();
     }
 
+    public override void LateUpdateState()
+    {
+        HandlePlayerRotation();
+    }
+
     public override void ExitState()
     {
         _context.PlayerAnimation.SetIsGrounded(false);
@@ -39,6 +45,11 @@ public class GroundedState : PlayerState
         if (!_context.CharacterController.isGrounded)
         {
             _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Falling);
+        }
+
+        if (_context.CheckForClimbableSurface(out _climbHit))
+        {
+            _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Climbing);
         }
 
         return StateKey;

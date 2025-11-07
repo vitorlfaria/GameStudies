@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ClimbingState : PlayerState
 {
-    private RaycastHit _climbHit;
-
     public ClimbingState(PlayerContext context, PlayerStateMachine.EPlayerState stateKey, PlayerStateMachine playerStateMachine)
         : base(context, stateKey, playerStateMachine)
     {
