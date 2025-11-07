@@ -16,7 +16,7 @@ MonoBehaviour:
   climbCheckDistance: 1
   climbableLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   climbSpeed: 2.5
   climbStrafeSpeed: 2
   climbGravity: 0

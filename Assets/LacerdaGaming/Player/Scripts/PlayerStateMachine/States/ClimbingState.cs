@@ -27,7 +27,28 @@ public class ClimbingState : PlayerState
             _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Falling);
             return;
         }
+        HandleMovement();
+    }
 
+    protected override void HandleMovement()
+    {
+        Vector2 input = _context.PlayerLocomotionInput.MovementInput;
+
+        Vector3 upward = _context.ClimbingConfig.climbSpeed * input.y * Vector3.up;
+        Vector3 side = _context.ClimbingConfig.climbStrafeSpeed * input.x * _context.PlayerTransform.right;
+
+        Vector3 move = upward + side;
+        _context.CharacterController.Move(move * Time.deltaTime);
+
+        _context.PlayerTransform.forward = -_climbHit.normal;
+        _context.PlayerTransform.position = Vector3.Lerp(
+            _context.PlayerTransform.position,
+            new Vector3(
+                _climbHit.point.x,
+                _climbHit.point.y - _context.CharacterController.height / 2f,
+                _climbHit.point.z) + _climbHit.normal * 0.51f,
+            10f * Time.deltaTime
+        );
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState() => StateKey;

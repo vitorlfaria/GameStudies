@@ -121,13 +121,23 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.EPlayerState>
     {
         if (_context.IsSprinting)
         {
-            _context.Stamina -= _movementConfig.staminaDepletionRate;
-            OnStaminaChange?.Invoke(this, new OnStaminaChangeEventArgs
-            {
-                stamina = _context.Stamina
-            });
+            DepletStamina();
+            return;
         }
-        else if (_context.Stamina < 100f)
+
+        if (_context.IsClimbing)
+        {
+            if (_context.PlayerLocomotionInput.MovementInput.magnitude > 0.01f)
+            {
+                DepletStamina();
+                return;
+            }
+
+            DepletStamina(0.18f);
+            return;
+        }
+
+        if (_context.Stamina < 100f)
         {
             _context.Stamina += _movementConfig.staminaRecoveryRate;
             OnStaminaChange?.Invoke(this, new OnStaminaChangeEventArgs
@@ -135,6 +145,15 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.EPlayerState>
                 stamina = _context.Stamina
             });
         }
+    }
+
+    private void DepletStamina(float rate = 0)
+    {
+        _context.Stamina -= _movementConfig.staminaDepletionRate - rate;
+        OnStaminaChange?.Invoke(this, new OnStaminaChangeEventArgs
+        {
+            stamina = _context.Stamina
+        });
     }
 
     private void InitializeStates()

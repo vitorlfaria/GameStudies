@@ -40,6 +40,11 @@ public class JumpingState : PlayerState
             _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Falling);
         }
 
+        if (_context.CheckForClimbableSurface(out _climbHit))
+        {
+            _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Climbing);
+        }
+
         return StateKey;
     }
 

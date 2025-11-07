@@ -35,6 +35,11 @@ public class FallingState : PlayerState
             _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Grounded);
         }
 
+        if (_context.CheckForClimbableSurface(out _climbHit))
+        {
+            _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Climbing);
+        }
+
         return StateKey;
     }
 
