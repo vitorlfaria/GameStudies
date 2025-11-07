@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5c9ed6c72d2ff4da730b1edf646a40, type: 3}
+  m_Name: PlayerClimbingConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerClimbingConfig
+  maxClimbAngle: 80
+  climbCheckDistance: 1
+  climbableLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  climbSpeed: 2.5
+  climbStrafeSpeed: 2
+  climbGravity: 0
+  consumesStamina: 1
+  staminaDrainRate: 5
+  minimumClimbStamina: 10
+  climbUpThreshold: 0.5
+  allowClimbJump: 1
+  wallJumpForce: 8
+  climbAnimationBlendSpeed: 5
