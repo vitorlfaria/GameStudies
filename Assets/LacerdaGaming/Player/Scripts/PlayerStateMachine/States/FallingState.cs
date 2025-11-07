@@ -25,7 +25,7 @@ public class FallingState : PlayerState
 
     public override void LateUpdateState()
     {
-        HandlePlayerRotation();
+        HandlePlayerRotationWhenMoving();
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()
@@ -33,11 +33,6 @@ public class FallingState : PlayerState
         if (_context.CharacterController.isGrounded)
         {
             _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Grounded);
-        }
-
-        if (_context.CheckForClimbableSurface(out _climbHit))
-        {
-            _playerStateMachine.TransitionToState(PlayerStateMachine.EPlayerState.Climbing);
         }
 
         return StateKey;

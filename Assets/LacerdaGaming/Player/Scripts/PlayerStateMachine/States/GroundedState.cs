@@ -27,7 +27,7 @@ public class GroundedState : PlayerState
 
     public override void LateUpdateState()
     {
-        HandlePlayerRotation();
+        HandlePlayerRotationWhenMoving();
     }
 
     public override void ExitState()

@@ -30,7 +30,7 @@ public class JumpingState : PlayerState
 
     public override void LateUpdateState()
     {
-        HandlePlayerRotation();
+        HandlePlayerRotationWhenMoving();
     }
 
     public override PlayerStateMachine.EPlayerState GetNextState()

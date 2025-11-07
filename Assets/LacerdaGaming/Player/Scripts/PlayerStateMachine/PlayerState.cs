@@ -57,7 +57,7 @@ public abstract class PlayerState : BaseState<PlayerStateMachine.EPlayerState>
         _context.CharacterController.Move(finalVelocity * Time.deltaTime);
     }
 
-    protected void HandlePlayerRotation()
+    protected void HandlePlayerRotationWhenMoving()
     {
         bool isMoving = _context.PlayerLocomotionInput.MovementInput != Vector2.zero;
 
@@ -67,5 +67,10 @@ public abstract class PlayerState : BaseState<PlayerStateMachine.EPlayerState>
             Quaternion targetRotation = Quaternion.LookRotation(_context.MovementDirection);
             _context.PlayerTransform.rotation = Quaternion.Lerp(_context.PlayerTransform.rotation, targetRotation, _context.MovementConfig.rotationSpeed * Time.deltaTime);
         }
+    }
+
+    protected void HandlePlayerRotation(Vector3 movementDirection)
+    {
+        _context.PlayerTransform.forward = movementDirection;
     }
 }
